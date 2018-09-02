@@ -1,0 +1,30 @@
+#!bin/bash
+
+# Creates an env file for drone's server
+#
+# $DRONE_HOST: drone's domain name
+# $DRONE_SECRET: to be shared with drone's agent
+# $DRONE_GITHUB_CLIENT: supplied by github's oauth
+# $DRONE_GITHUB_SECRET: supplied by github's oauth
+#
+
+DRONE_HOST=$1
+DRONE_SECRET=$2
+DRONE_GITHUB_CLIENT=$3
+DRONE_GITHUB_SECRET=$4
+OUTPUT_FILE=$5
+
+echo "#DRONE SERVER
+
+#SERVER SETTINGS
+DRONE_SECRET=$DRONE_SECRET
+DRONE_HOST=https://$DRONE_HOST
+
+# REGISTRY SETTINGS
+DRONE_OPEN=false
+DRONE_ADMIN=juliantellez
+
+# GITHUB SETTINGS
+DRONE_GITHUB=true
+DRONE_GITHUB_CLIENT=$DRONE_GITHUB_CLIENT
+DRONE_GITHUB_SECRET=$DRONE_GITHUB_SECRET" > $OUTPUT_FILE
