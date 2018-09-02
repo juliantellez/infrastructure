@@ -3,7 +3,7 @@
 # Creates an env file for drone's server
 #
 # $DRONE_HOST: drone's domain name
-# $DRONE_SECRET: to be shared with drone's agent
+# $DRONE_SECRET: to be shared with drone's agents
 # $DRONE_GITHUB_CLIENT: supplied by github's oauth
 # $DRONE_GITHUB_SECRET: supplied by github's oauth
 #
