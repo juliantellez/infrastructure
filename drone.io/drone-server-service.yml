@@ -1,0 +1,21 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: drone-server
+  labels:
+    name: drone-server-service
+spec:
+  type: LoadBalancer
+  ports:
+    - name: http
+      port: 80
+      protocol: TCP
+      targetPort: drone-web-port
+    - name: https
+      port: 443
+      protocol: TCP
+      targetPort: drone-webs-port
+    - name: drone-agent
+      port: 9000
+  selector:
+    name: drone-server

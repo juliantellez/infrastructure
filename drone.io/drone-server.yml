@@ -1,0 +1,60 @@
+#
+# ENVIRONMENT:
+# DRONE_HOST
+# DRONE_SECRET
+# DRONE_ADMIN
+# DRONE_GITHUB_CLIENT
+# DRONE_GITHUB_SECRET
+#
+
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: drone-server
+spec:
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        name: drone-server
+    spec:
+      containers:
+      - name: drone-server
+        image: drone/drone:0.8
+
+        env:
+          - name: DRONE_HOST
+            value: ${DRONE_HOST}
+          - name: DRONE_LETS_ENCRYPT
+            value: "true"
+          - name: DRONE_SECRET
+            value: ${DRONE_SECRET}
+
+          - name: DRONE_OPEN
+            value: "false"
+          - name: DRONE_ADMIN
+            value: ${DRONE_ADMIN}
+
+          - name: "DRONE_GITHUB"
+            value: "true"
+          - name: "DRONE_GITHUB_CLIENT"
+            value: ${DRONE_GITHUB_CLIENT}
+          - name: "DRONE_GITHUB_SECRET"
+            value: ${DRONE_GITHUB_SECRET}
+
+        ports:
+          - name: drone-web-port
+            containerPort: 80
+          - name: drone-webs-port
+            containerPort: 443
+          - name: drone-ag-port
+            containerPort: 9000
+
+        volumeMounts:
+          - mountPath: /var/lib/drone
+            name: drone-server-db
+
+      volumes:
+        - name: drone-server-db
+          persistentVolumeClaim:
+            claimName: drone-server-volume
